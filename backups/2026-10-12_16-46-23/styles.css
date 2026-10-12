@@ -1,0 +1,417 @@
+/* Layout measured from reference/Raj One Final.jpg (see STUDY.md).
+   Horizontal + type sizes in vw, vertical positions in vh / % of the hero.
+   1920x1080 equivalents are noted in comments. */
+
+:root {
+  --white: #fff;
+  --bg: #0E090C;
+
+  --font-display: "Noto Serif Display", "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-text: "Newsreader", "Source Serif 4", Georgia, serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  /* Nav / button: cap height 1.17vh (12.6px) -> 0.905vw (17.4px) */
+  --nav-size: clamp(12px, 0.942vw, 26px);
+  --nav-track: 0.015em;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  height: 0; /* children are positioned individually */
+}
+
+/* Logo box: x 3.05–5.38vw, y 3.4–8.0vh */
+.logo {
+  position: absolute;
+  left: 3.12vw;
+  top: 5.8vh;
+  transform: translateY(-50%);
+}
+
+/* Brand wordmark (3:1), vertically centred on the nav line at 5.8vh */
+.logo img {
+  height: clamp(34px, 6.4vh, 120px);
+  width: auto;
+}
+
+/* Nav: centred on 50vw, cap centre line at 5.8vh */
+.main-nav {
+  position: absolute;
+  left: 50%;
+  top: 5.8vh;
+  transform: translate(-50%, -50%);
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 2.04vw; /* visible gap between words = 2.17vw (≈42px) incl. tracking */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav a,
+.enquire,
+.scroll-cue__label {
+  font-family: var(--font-sans);
+  font-weight: 350;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.main-nav a {
+  display: block;
+  font-size: var(--nav-size);
+  letter-spacing: var(--nav-track);
+  margin-right: calc(-1 * var(--nav-track));
+}
+
+/* ENQUIRE: box x 89.84–96.88vw, y 3.48–8.07vh (≈135×49px), 1px white outline */
+.enquire {
+  position: absolute;
+  right: 3.12vw;
+  top: 3.48vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7.04vw;
+  min-width: max-content;
+  height: 4.59vh;
+  min-height: 36px;
+  padding: 0 1.2em 0 calc(1.2em + var(--nav-track));
+  border: 1px solid var(--white);
+  font-size: var(--nav-size);
+  letter-spacing: var(--nav-track);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 420px;
+  overflow: hidden;
+  background: #0E090C url('assets/hero.jpg') center / cover no-repeat;
+}
+
+/* Headline + tagline block; vertically centred (block centre ≈ 49.5vh) */
+.hero__content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 49.22%;
+  transform: translateY(-50%);
+  padding: 0 16px 0 calc(16px + 0.14vw); /* nudges the centre 0.07vw right, as in the reference */
+  text-align: center;
+}
+
+/* ARCHITECTURAL: x 25.74–74.16vw, cap 37.47–45.12vh -> 5.69vw (≈109px)
+   MASTERY cap top 47.79vh -> line-height 1.02 */
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 520;
+  font-size: clamp(40px, 5.806vw, 260px);
+  line-height: 1.008;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero__title span {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Tagline: x 34.08–65.92vw, y 59.41–62.24vh -> 1.639vw (≈31.5px) */
+.hero__tagline {
+  margin: 0.9em 0 0;
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-variation-settings: "opsz" 16;
+  font-size: clamp(15px, 1.621vw, 60px);
+  line-height: 1.3;
+  letter-spacing: -0.0065em;
+}
+
+/* Scroll cue: arrow x 49.55–50.44vw, y 88.83–91.80vh (≈17×32px);
+   label cap 94.04–95.08vh, x 45.39–54.56vw */
+.scroll-cue {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scroll-cue__arrow {
+  position: absolute;
+  left: 50%;
+  top: 88.8%;
+  height: clamp(22px, 3.02vh, 60px);
+  width: auto;
+  aspect-ratio: 17 / 32;
+  transform: translateX(-50%);
+  overflow: visible;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scroll-cue__label {
+  position: absolute;
+  left: 50%;
+  top: 94.63%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(11px, 0.804vw, 24px);
+  letter-spacing: 0.078em;
+  margin-right: -0.078em;
+}
+
+/* ---------- Scroll film ----------
+   Default (no JS, reduced motion, or video unavailable): static hero,
+   chapters follow as plain sections. film.js adds .has-film to <html>. */
+
+.hero__film {
+  display: none;
+}
+
+.chapters {
+  padding: 12vh 3.12vw;
+}
+
+.chapter {
+  max-width: 44rem;
+  padding: 6vh 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.chapter__label {
+  margin: 0 0 1.2em;
+  font-family: var(--font-sans);
+  font-weight: 350;
+  font-size: clamp(11px, 0.804vw, 24px);
+  letter-spacing: 0.078em;
+  text-transform: uppercase;
+}
+
+.chapter__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 520;
+  font-size: clamp(28px, 2.9vw, 120px);
+  line-height: 1.08;
+}
+
+.chapter__text {
+  margin: 0.8em 0 0;
+  max-width: 30em;
+  font-family: var(--font-text);
+  font-variation-settings: "opsz" 16;
+  font-size: clamp(16px, 1.25vw, 44px);
+  line-height: 1.45;
+}
+
+.chapter__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.6em;
+  padding: 0.95em 1.4em;
+  border: 1px solid var(--white);
+  font-family: var(--font-sans);
+  font-weight: 350;
+  font-size: var(--nav-size);
+  letter-spacing: var(--nav-track);
+  line-height: 1;
+}
+
+.main-nav a {
+  transition: opacity 0.4s ease;
+}
+
+.main-nav a.is-active {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.5em;
+}
+
+.main-nav.has-active a:not(.is-active) {
+  opacity: 0.55;
+}
+
+.has-film .site-header {
+  position: fixed;
+}
+
+.has-film .film {
+  position: relative;
+  height: 520vh;
+}
+
+.has-film .film__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.has-film .hero__film {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.has-film .hero__content,
+.has-film .scroll-cue {
+  will-change: opacity;
+}
+
+.has-film .chapters {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.has-film .chapter {
+  position: absolute;
+  left: 3.12vw;
+  bottom: 13vh;
+  width: min(40vw, 44rem);
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  text-shadow: 0 0 2.4em rgba(14, 9, 12, 0.55);
+  will-change: opacity, transform;
+}
+
+.has-film .chapter.is-active {
+  pointer-events: auto;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 768px) {
+  :root {
+    --nav-size: 12px;
+    --nav-track: 0.06em;
+  }
+
+  .logo {
+    left: 16px;
+    top: 38px;
+  }
+
+  .logo img {
+    height: 38px;
+  }
+
+  .enquire {
+    right: 16px;
+    top: 20px;
+    width: auto;
+    height: 36px;
+    min-height: 0;
+  }
+
+  /* Nav drops to its own centred row under the logo / button */
+  .main-nav {
+    left: 16px;
+    right: 16px;
+    top: 82px;
+    transform: none;
+  }
+
+  .main-nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+  }
+
+  .hero__content {
+    top: 50%;
+    padding: 0 16px;
+  }
+
+  /* ARCHITECTURAL is 8.5em wide in Gloock: 10.6vw fits a 16px gutter */
+  .hero__title {
+    font-size: 10.6vw;
+    line-height: 1.04;
+  }
+
+  .hero__tagline {
+    max-width: 22em;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: clamp(16px, 4.4vw, 22px);
+    line-height: 1.35;
+  }
+
+  .scroll-cue__arrow {
+    top: auto;
+    bottom: 64px;
+    height: 28px;
+  }
+
+  .scroll-cue__label {
+    top: auto;
+    bottom: 28px;
+    transform: translateX(-50%);
+    font-size: 11px;
+  }
+
+  .chapters {
+    padding: 8vh 16px;
+  }
+
+  .has-film .chapter {
+    left: 16px;
+    right: 16px;
+    bottom: 10vh;
+    width: auto;
+  }
+}

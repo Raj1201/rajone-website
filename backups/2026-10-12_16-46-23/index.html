@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architectural Mastery</title>
+  <meta name="description" content="Bespoke residences for the modern connoisseur.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300..600&family=Inter:wght@300..500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#" aria-label="Home">
+      <img src="assets/logo.png" alt="Raj Realty Group">
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="#chapter-projects" data-chapter="projects">PROJECTS</a></li>
+        <li><a href="#chapter-studio" data-chapter="studio">STUDIO</a></li>
+        <li><a href="#chapter-news" data-chapter="news">NEWS</a></li>
+        <li><a href="#chapter-contact" data-chapter="contact">CONTACT</a></li>
+      </ul>
+    </nav>
+    <a class="enquire" href="#">ENQUIRE</a>
+  </header>
+
+  <main>
+    <div class="film" id="film">
+    <div class="film__pin">
+    <section class="hero">
+      <video class="hero__film" muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+
+      <div class="hero__content">
+        <h1 class="hero__title">
+          <span>ARCHITECTURAL</span>
+          <span>MASTERY</span>
+        </h1>
+        <p class="hero__tagline">Bespoke residences for the modern connoisseur.</p>
+      </div>
+
+      <div class="scroll-cue">
+        <svg class="scroll-cue__arrow" viewBox="0 0 17 32" aria-hidden="true" focusable="false">
+          <path d="M8.5 0.75V31.25" />
+          <path d="M1 23.75L8.5 31.25L16 23.75" />
+        </svg>
+        <span class="scroll-cue__label">SCROLL TO EXPLORE</span>
+      </div>
+    </section>
+
+    <div class="chapters">
+      <section class="chapter" id="chapter-projects" data-chapter="projects">
+        <p class="chapter__label">01 — Projects</p>
+        <h2 class="chapter__title">Homes that open to the view.</h2>
+        <p class="chapter__text">Cantilevered rooms, glass from floor to sky, and terraces that run to the edge of the hill.</p>
+      </section>
+      <section class="chapter" id="chapter-studio" data-chapter="studio">
+        <p class="chapter__label">02 — Studio</p>
+        <h2 class="chapter__title">Every detail, drawn in-house.</h2>
+        <p class="chapter__text">Architecture, interiors and lighting from one studio, from the first sketch to the last stone.</p>
+      </section>
+      <section class="chapter" id="chapter-news" data-chapter="news">
+        <p class="chapter__label">03 — News</p>
+        <h2 class="chapter__title">Now complete: the Hillside Residence.</h2>
+        <p class="chapter__text">Stacked stone, oiled cedar and an infinity pool above the valley lights.</p>
+      </section>
+      <section class="chapter" id="chapter-contact" data-chapter="contact">
+        <p class="chapter__label">04 — Contact</p>
+        <h2 class="chapter__title">Begin your residence.</h2>
+        <p class="chapter__text">Tell us about your site and the way you want to live.</p>
+        <a class="chapter__cta" href="#">ENQUIRE</a>
+      </section>
+    </div>
+    </div>
+    </div>
+  </main>
+  <script src="film.js"></script>
+</body>
+</html>
