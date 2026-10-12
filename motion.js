@@ -138,8 +138,8 @@
   var facts = $$('.facts [data-step]');
 
   function updateTower() {
-    var p = small.matches ? sceneProgress(tower) : pinProgress(tower);
-    var k = small.matches ? smooth(0.12, 0.5, p) : smooth(0.04, 0.62, p);
+    var p = pinProgress(tower);
+    var k = smooth(0.04, 0.62, p);
     towerFrame.style.setProperty('--reveal', ((1 - k) * 100).toFixed(2) + '%');
     towerFrame.style.setProperty('--scan', (smooth(0, 0.04, k) * (1 - smooth(0.96, 1, k))).toFixed(3));
     if (towerFrame.__spin && towerFrame.classList.contains('is-3d')) {
@@ -164,10 +164,12 @@
 
   if (insideVid) {
     insideVid.removeAttribute('controls');
-    insideVid.src = small.matches ? 'assets/inside-mobile.mp4' : 'assets/inside-desktop.mp4';
+    var insideSrc = small.matches ? 'assets/inside-mobile.mp4' : 'assets/inside-desktop.mp4';
+    var src = insideVid.querySelector('source');
+    if (src) src.remove();
+    if (window.loadScrubVideo) window.loadScrubVideo(insideVid, insideSrc); else insideVid.src = insideSrc;
     insideVid.addEventListener('loadedmetadata', function () {
       insideDur = insideVid.duration || 0;
-      insideVid.pause();
     });
   }
 
@@ -207,11 +209,6 @@
   var portalCopy = $('.portal__copy');
 
   function updatePortal() {
-    if (small.matches) {
-      portalFrame.style.transform = portalImg.style.transform = portalArch.style.transform = '';
-      portalCopy.style.opacity = '';
-      return;
-    }
     var p = pinProgress(portal);
     var k = smooth(0.02, 0.55, p);
     var dx = window.innerWidth / 2 - (portalFrame.offsetLeft + portalFrame.offsetWidth / 2);
@@ -222,7 +219,7 @@
     portalImg.style.transform = 'scale(' + mix(1.55, 1, k).toFixed(3) + ') translateY(' + ((p - 0.5) * -4).toFixed(2) + '%)';
     var c = smooth(0.42, 0.66, p);
     portalCopy.style.opacity = c.toFixed(3);
-    portalCopy.style.transform = 'translateY(calc(-50% + ' + ((1 - c) * 4).toFixed(2) + 'vh))';
+    portalCopy.style.transform = small.matches ? 'translateY(' + ((1 - c) * 4).toFixed(2) + 'vh)' : 'translateY(calc(-50% + ' + ((1 - c) * 4).toFixed(2) + 'vh))';
     if (c > 0.3) $$('[data-split], [data-reveal]', portalCopy).forEach(function (el) { el.classList.add('is-in'); });
   }
 
@@ -272,18 +269,12 @@
   var spreadCards = $$('.spread__card');
 
   function updateSpread() {
-    if (small.matches) {
-      spreadCards.forEach(function (c) {
-        var k = smooth(0.05, 0.4, sceneProgress(c));
-        c.style.transform = 'rotateX(' + mix(40, 0, k).toFixed(2) + 'deg) translateY(' + mix(8, 0, k).toFixed(2) + 'vh)';
-      });
-      return;
-    }
     var p = pinProgress(spread);
+    var reach = small.matches ? 25 : 29;
     var k = smooth(0.04, 0.55, p);
     spreadCards.forEach(function (c, i) {
       var d = i - 1;
-      var x = d * mix(1.5, 29, k);
+      var x = d * mix(1.5, reach, k);
       var y = mix(Math.abs(d) * 2 + (d === 0 ? -1 : 0), 0, k);
       var rz = d * mix(-8, 0, k) + (d === 0 ? mix(3, 0, k) : 0);
       var ry = d * (mix(0, -14, k) - (p - 0.55) * 12);
@@ -301,13 +292,12 @@
   var hotspots = $$('.hotspots li');
 
   function updateSky() {
-    var p = small.matches ? sceneProgress(sky) : pinProgress(sky);
-    var k = small.matches ? smooth(0.1, 0.45, p) : smooth(0.02, 0.5, p);
+    var p = pinProgress(sky);
+    var k = smooth(0.02, 0.5, p);
     aerial.style.transform = 'translateY(' + mix(12, 0, k).toFixed(2) + 'vh) rotateX(' + mix(62, 0, k).toFixed(2) + 'deg) scale(' + mix(0.7, 1, k).toFixed(3) + ')';
     skyLevel.style.transform = 'translate(-50%, -50%) scale(' + mix(1.3, 1, k).toFixed(3) + ') translateY(' + ((p - 0.5) * -8).toFixed(2) + 'vh)';
     skyLevel.style.opacity = smooth(0, 0.35, p).toFixed(3);
-    var shift = small.matches ? -0.25 : 0;
-    hotspots.forEach(function (h) { h.classList.toggle('on', p >= parseFloat(h.getAttribute('data-at')) + shift); });
+    hotspots.forEach(function (h) { h.classList.toggle('on', p >= parseFloat(h.getAttribute('data-at'))); });
   }
 
   var gallery = $('.gallery');

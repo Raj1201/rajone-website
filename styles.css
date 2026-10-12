@@ -1752,59 +1752,124 @@ svg {
     width: 100%;
   }
 
-  /* On phones only the plan deck and the amenities carousel stay pinned */
-  .js-motion .tower,
-  .js-motion .portal,
-  .js-motion .spread,
-  .js-motion .sky {
-    height: auto;
-  }
+  /* Phones keep every pinned 3D scene, laid out for a tall narrow screen below the fixed header */
+  .js-motion .tower { height: 260vh; }
+  .js-motion .portal { height: 240vh; }
+  .js-motion .spread { height: 220vh; }
+  .js-motion .sky { height: 230vh; }
 
   .js-motion .tower .scene__pin,
   .js-motion .portal .scene__pin,
   .js-motion .spread .scene__pin,
   .js-motion .sky .scene__pin {
-    position: relative;
-    display: block;
-    height: auto;
-    min-height: 0;
-    padding: 12vh var(--gutter);
-    overflow: visible;
+    padding: 128px var(--gutter) 3vh;
+    align-items: flex-start;
   }
 
-  .portal__frame,
-  .portal__copy {
-    position: relative !important;
+  .js-motion .tower__grid {
+    gap: 2.4vh;
+  }
+
+  .js-motion .tower .wordmark {
+    font-size: 15vw;
+  }
+
+  .js-motion .tower .lead {
+    font-size: 16px;
+  }
+
+  .js-motion .tower .level {
+    margin-top: 1.4vh;
+  }
+
+  .js-motion .tower .level__num {
+    font-size: 13vw;
+  }
+
+  .js-motion .tower .facts {
+    gap: 1.6vh 4vw;
+    margin-top: 1.6vh;
+    padding-top: 1.6vh;
+  }
+
+  .js-motion .tower .facts dt {
+    font-size: 17px;
+  }
+
+  .js-motion .tower .facts dd {
+    font-size: 9px;
+  }
+
+  .js-motion .tower__frame {
+    width: 46vw;
+    margin: 0 auto;
+  }
+
+  .tower__controls {
+    bottom: -5.5vh;
+  }
+
+  .js-motion .portal__frame {
+    top: 132px;
+    left: 12vw;
+    width: 76vw;
+    height: 44svh;
+    border-radius: 38vw 38vw 2px 2px;
+  }
+
+  .js-motion .portal__arch {
+    top: calc(132px - 2.4vw);
+    left: calc(12vw - 2.4vw);
+    width: calc(76vw + 4.8vw);
+    height: calc(44svh + 2.4vw);
+    border-radius: 40.4vw 40.4vw 0 0;
+  }
+
+  .js-motion .portal__copy {
     top: auto;
-    left: auto;
-    right: auto;
-    width: 100%;
-    transform: none;
+    bottom: 6svh;
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
   }
 
-  .portal__arch {
-    display: none;
+  .js-motion .portal__copy .title {
+    font-size: 26px;
   }
 
-  .portal__frame {
-    height: 70vh;
-    margin-top: 6vh;
-    border-radius: 46vw 46vw 2px 2px;
+  .js-motion .portal__copy .body {
+    font-size: 15px;
   }
 
-  .spread__cards,
+  .js-motion .spread .scene__pin {
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 3vh;
+  }
+
   .js-motion .spread__cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 6vh;
-    height: auto;
+    height: 56svh;
   }
 
   .js-motion .spread__card {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
+    width: 50vw;
+  }
+
+  .js-motion .sky .scene__pin {
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 4vh;
+  }
+
+  .js-motion .sky__stage {
+    margin-top: 2vh;
+  }
+
+  /* The full-screen grain blend is costly on phones */
+  .atmos__grain {
+    animation: none;
+    mix-blend-mode: normal;
+    opacity: 0.05;
   }
 
   .hotspots li {

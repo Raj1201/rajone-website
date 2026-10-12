@@ -13,8 +13,9 @@
   var navLinks = nav ? nav.querySelectorAll('a[data-chapter]') : [];
 
   var isSmall = window.matchMedia('(max-width: 768px)').matches;
-  video.src = isSmall ? 'assets/film-mobile.mp4' : 'assets/film-desktop.mp4';
   video.poster = 'assets/film-poster.jpg';
+  var filmSrc = isSmall ? 'assets/film-mobile.mp4' : 'assets/film-desktop.mp4';
+  if (window.loadScrubVideo) window.loadScrubVideo(video, filmSrc); else video.src = filmSrc;
 
   // Chapter windows as fractions of the scroll track; the last one holds to the end.
   var windows = [
@@ -102,7 +103,6 @@
 
   video.addEventListener('loadedmetadata', function () {
     duration = video.duration || 0;
-    video.pause();
   });
   video.addEventListener('error', fail);
 
