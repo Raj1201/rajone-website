@@ -240,12 +240,13 @@
           <figure class="sky__aerial ticks">
             <img width="1238" height="548" src="assets/project/skydeck-aerial.jpg" alt="Aerial view of the RAJONE sky deck on Level 22" loading="lazy">
             <ul class="hotspots">
-              <li style="left:28%;top:16%" data-at="0.55">Kids' play</li>
-              <li style="left:68%;top:15%" data-at="0.62">Turf</li>
-              <li style="left:26%;top:66%" data-at="0.69">Café</li>
-              <li style="left:47%;top:68%" data-at="0.76">Jogging track</li>
-              <li style="left:71%;top:66%" data-at="0.83">Yoga deck</li>
+              <li style="left:28%;top:16%" data-at="0.55"><button type="button" data-amenity="kids">Kids' play</button></li>
+              <li style="left:68%;top:15%" data-at="0.62"><button type="button" data-amenity="turf">Turf</button></li>
+              <li style="left:26%;top:66%" data-at="0.69"><button type="button" data-amenity="cafe">Café</button></li>
+              <li style="left:47%;top:68%" data-at="0.76"><button type="button" data-amenity="jogging">Jogging track</button></li>
+              <li style="left:71%;top:66%" data-at="0.83"><button type="button" data-amenity="yoga">Yoga deck</button></li>
             </ul>
+            <p class="hotspots__hint">Tap a feature to walk through it</p>
           </figure>
         </div>
       </div>
@@ -308,9 +309,30 @@
     <p>© 2026 Raj Realty Group. All images are artist's impressions.</p>
   </footer>
 
+
+  <div class="tour" id="tour" role="dialog" aria-modal="true" aria-labelledby="tour-title" hidden>
+    <div class="tour__backdrop" data-close></div>
+    <figure class="tour__frame">
+      <div class="tour__media">
+        <img class="tour__still" alt="">
+        <video class="tour__video" muted playsinline loop preload="auto"></video>
+      </div>
+      <figcaption class="tour__bar">
+        <span class="tour__eyebrow">Sky deck · Level 22</span>
+        <span class="tour__title" id="tour-title"></span>
+        <span class="tour__nav">
+          <button type="button" data-step="-1" aria-label="Previous feature">‹</button>
+          <button type="button" data-step="1" aria-label="Next feature">›</button>
+        </span>
+      </figcaption>
+      <button type="button" class="tour__close" data-close aria-label="Close">×</button>
+    </figure>
+  </div>
+
   <script src="scrub.js"></script>
   <script src="film.js"></script>
   <script src="motion.js"></script>
   <script src="tower3d.js"></script>
+  <script src="tour.js"></script>
 </body>
 </html>

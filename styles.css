@@ -1370,8 +1370,9 @@ svg {
   display: flex;
   align-items: center;
   gap: 0.7em;
-  padding: 0.5em 0.9em 0.5em 0.6em;
+  padding: 0 0 0 0.6em;
   transform: translate(-50%, -50%);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   border: 1px solid rgba(201, 164, 106, 0.55);
   background: rgba(14, 9, 12, 0.78);
   font-family: var(--font-sans);
@@ -1394,14 +1395,206 @@ svg {
 }
 
 .js-motion .hotspots li {
+  pointer-events: none;
   opacity: 0;
   transform: translate(-50%, -20%);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .js-motion .hotspots li.on {
+  pointer-events: auto;
   opacity: 1;
   transform: translate(-50%, -50%);
+}
+
+/* Hotspot buttons open the walkthrough pop-up */
+.hotspots button {
+  padding: 0.5em 0.9em 0.5em 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hotspots button::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.hotspots li:hover,
+.hotspots li:focus-within {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.hotspots button:focus-visible {
+  outline: none;
+}
+
+.hotspots__hint {
+  margin: 3vh 0 0;
+  font-family: var(--font-sans);
+  font-weight: 350;
+  font-size: clamp(10px, 0.72vw, 20px);
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  perspective: 1800px;
+}
+
+.tour[hidden] {
+  display: none;
+}
+
+.tour__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 6, 9, 0.82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.tour.is-open .tour__backdrop {
+  opacity: 1;
+}
+
+.tour__frame {
+  position: relative;
+  width: min(90vw, calc(70vh * 16 / 9));
+  margin: 0;
+  opacity: 0;
+  transform: rotateX(28deg) translateY(8vh) scale(0.82);
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.2, 0.75, 0.15, 1);
+}
+
+.tour.is-open .tour__frame {
+  opacity: 1;
+  transform: none;
+}
+
+.tour__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #0E090C;
+  box-shadow: 0 6vh 14vh rgba(0, 0, 0, 0.7);
+}
+
+.tour__still,
+.tour__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tour__video {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.tour.has-video .tour__video {
+  opacity: 1;
+}
+
+/* Until a walkthrough video exists, the render gets a slow camera drift */
+.tour.is-open:not(.has-video) .tour__still {
+  animation: tour-drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes tour-drift {
+  0% { transform: scale(1.04) translate(1.5%, 1%); }
+  100% { transform: scale(1.22) translate(-2.5%, -2%); }
+}
+
+.tour__bar {
+  display: flex;
+  align-items: center;
+  gap: 1.4vw;
+  margin-top: 2.2vh;
+}
+
+.tour__eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 350;
+  font-size: clamp(10px, 0.72vw, 20px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.tour__title {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 520;
+  font-size: clamp(22px, 2vw, 64px);
+  color: var(--white);
+}
+
+.tour__nav {
+  display: flex;
+  gap: 0.6vw;
+}
+
+.tour__nav button,
+.tour__close {
+  width: clamp(38px, 2.6vw, 64px);
+  height: clamp(38px, 2.6vw, 64px);
+  padding: 0;
+  border: 1px solid rgba(201, 164, 106, 0.6);
+  border-radius: 50%;
+  background: rgba(14, 9, 12, 0.6);
+  font-family: var(--font-sans);
+  font-size: clamp(18px, 1.3vw, 34px);
+  line-height: 1;
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tour__nav button:hover,
+.tour__close:hover,
+.tour__nav button:focus-visible,
+.tour__close:focus-visible {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.tour__close {
+  position: absolute;
+  top: calc(-1 * clamp(38px, 2.6vw, 64px) - 1.4vh);
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour__frame,
+  .tour__backdrop {
+    transition: none;
+  }
+
+  .tour.is-open:not(.has-video) .tour__still {
+    animation: none;
+  }
 }
 
 /* 07 · Amenities carousel */
@@ -1873,8 +2066,42 @@ svg {
   }
 
   .hotspots li {
-    padding: 0.35em 0.55em 0.35em 0.4em;
-    font-size: 8px;
+    padding: 0 0 0 0.4em;
+    font-size: 9px;
+  }
+
+  .hotspots button {
+    padding: 0.6em 0.6em 0.6em 0;
+  }
+
+  .tour {
+    padding: 0 0 6vh;
+    align-items: flex-end;
+  }
+
+  .tour__frame {
+    width: 100vw;
+  }
+
+  .tour__media {
+    aspect-ratio: 4 / 5;
+    border-radius: 0;
+  }
+
+  .tour__bar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 0 var(--gutter);
+  }
+
+  .tour__eyebrow {
+    width: 100%;
+  }
+
+  .tour__close {
+    top: auto;
+    bottom: calc(100% + 12px);
+    right: var(--gutter);
   }
 
   .js-motion .deck .scene__pin {
